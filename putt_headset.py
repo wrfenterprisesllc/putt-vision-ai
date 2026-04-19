@@ -53,10 +53,13 @@ def reset_imu(rst_pin: int) -> None:
     support the Raspberry Pi 5's RP1 GPIO controller.
     """
     rst = OutputDevice(rst_pin, initial_value=True)
-    rst.off()           # pull RST low
-    time.sleep(0.1)     # 100 ms reset pulse
-    rst.on()            # release RST
-    time.sleep(1.0)     # wait for BNO055 boot sequence
+    try:
+        rst.off()           # pull RST low
+        time.sleep(0.1)     # 100 ms reset pulse
+        rst.on()            # release RST
+        time.sleep(1.0)     # wait for BNO055 boot sequence
+    finally:
+        rst.close()         # release GPIO so it's not "busy" on next run
 
 
 def init_imu() -> adafruit_bno055.BNO055_UART:
