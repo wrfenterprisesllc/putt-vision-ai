@@ -1,0 +1,5 @@
+adafruit-circuitpython-bno055
+pyserial
+opencv-python
+picamera2
+gpiozero
